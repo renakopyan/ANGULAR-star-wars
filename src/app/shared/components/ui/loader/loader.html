@@ -1,4 +1,13 @@
 <div class="loader" role="status" aria-live="polite" aria-label="Загрузка">
-  <div class="loader__spinner" aria-hidden="true"></div>
+  <div class="loader__hyperspace" aria-hidden="true">
+    @for (streak of streaks; track $index) {
+      <span
+        class="loader__streak"
+        [class.loader__streak--accent]="streak.accent"
+        [style.--angle]="streak.angle + 'deg'"
+        [style.animation-delay.s]="-streak.delay"
+      ></span>
+    }
+  </div>
   <p class="loader__label">Загрузка</p>
 </div>

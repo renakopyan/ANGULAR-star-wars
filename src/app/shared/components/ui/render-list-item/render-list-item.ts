@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { AppearanceService } from '@shared/services';
 
 @Component({
@@ -15,6 +15,17 @@ export class RenderListItem {
   public image = input('');
   public imagePlaceholder = input('');
   public onRenderItemClick = output();
+  public isImageLoaded = signal(false);
+
+  constructor() {
+    effect(() => {
+      const src = this.image() || this.imagePlaceholder();
+      const img = new Image();
+      img.onload = img.onerror = () => this.isImageLoaded.set(true);
+      img.src = src;
+      this.isImageLoaded.set(!src || img.complete);
+    });
+  }
 
   handleRenderItemClick() {
     this.onRenderItemClick.emit();

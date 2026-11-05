@@ -129,3 +129,35 @@ body::after {
     animation: none;
   }
 }
+
+.app-container {
+  view-transition-name: page;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(page) {
+  animation: page-out 0.18s ease-in both;
+}
+
+::view-transition-new(page) {
+  animation: page-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation: none;
+  }
+}
