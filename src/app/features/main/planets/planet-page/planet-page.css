@@ -1,390 +1,386 @@
-.planet-page {
-  width: 100%;
-  color: #ffffff;
+:host {
+  display: block;
+  --hud-line: color-mix(in srgb, var(--accent-palette) 45%, transparent);
+  --hud-faint: color-mix(in srgb, var(--accent-palette) 16%, transparent);
+  --hud-glow: color-mix(in srgb, var(--accent-palette) 35%, transparent);
 }
 
-.planet-page__back-link {
-  display: inline-flex;
+.planet-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.planet-hud__header {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.planet-hud__back {
   color: var(--accent-palette);
   font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-decoration: none;
   text-transform: uppercase;
-  transition:
-    color 0.25s ease,
-    text-shadow 0.25s ease,
-    transform 0.25s ease;
+  transition: opacity 0.2s ease;
 }
 
-.planet-page__back-link::before {
-  content: '<';
-  font-size: 14px;
+.planet-hud__back::before {
+  content: '< ';
 }
 
-.planet-page__back-link:hover {
-  color: #ffffff;
-  text-shadow: 0 0 16px color-mix(in srgb, var(--accent-palette) 70%, transparent);
-  transform: translateX(-2px);
+.planet-hud__id {
+  padding: 6px 12px;
+  border: 1px solid var(--hud-line);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.planet-page__back-link--inline {
-  margin: 24px 0 0;
+.planet-hud__heading {
+  text-align: center;
 }
 
-.planet-page__hero {
-  position: relative;
+.planet-hud__eyebrow,
+.planet-state__eyebrow {
+  margin: 0;
+  color: var(--accent-palette);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.planet-hud__title {
+  margin: 10px 0 0;
+  color: #fff;
+  font-size: clamp(44px, 9vw, 104px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 40px var(--hud-glow);
+}
+
+.planet-hud__subtitle {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.planet-hud__stage {
   display: grid;
-  grid-template-columns: minmax(290px, 460px) minmax(0, 1fr);
-  gap: 34px;
-  align-items: stretch;
+  grid-template-columns: 1fr minmax(260px, 420px) 1fr;
+  align-items: center;
+  gap: 24px;
 }
 
-.planet-page__hero::before {
-  content: '';
-  position: absolute;
-  inset: -90px -50px auto;
-  z-index: -1;
-  height: 360px;
-  background:
-    radial-gradient(circle at 18% 24%, color-mix(in srgb, var(--accent-palette) 18%, transparent), transparent 34%),
-    radial-gradient(circle at 78% 16%, color-mix(in srgb, var(--accent-palette) 12%, transparent), transparent 34%),
-    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--accent-palette) 8%, transparent), transparent 36%);
-  filter: blur(12px);
+.planet-hud__readouts {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.planet-page__visual-card,
-.planet-page__info-card,
-.planet-page__state-card,
-.planet-page__loading-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 22%, transparent);
-  border-radius: 30px;
-  background:
-    linear-gradient(180deg, rgba(18, 18, 18, 0.92), rgba(4, 4, 4, 0.96)),
-    #0d0d0d;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 28px 70px rgba(0, 0, 0, 0.5);
-}
-
-.planet-page__visual-card::before,
-.planet-page__info-card::before,
-.planet-page__state-card::before,
-.planet-page__loading-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent-palette) 12%, transparent), transparent 32%),
-    linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.055), transparent),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.026) 0,
-      rgba(255, 255, 255, 0.026) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-  opacity: 0.42;
-}
-
-.planet-page__visual-card {
-  padding: 18px;
-}
-
-.planet-page__image-shell {
+.planet-hud__readout {
   position: relative;
   display: flex;
-  min-height: 620px;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent-palette) 14%, transparent), transparent 42%),
-    #000000;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 18px;
+  border: 1px solid var(--hud-faint);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(8px);
+  animation: hud-readout-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.planet-page__image {
+.planet-hud__readouts--left .planet-hud__readout {
+  align-items: flex-end;
+  text-align: right;
+  border-right: 2px solid var(--accent-palette);
+}
+
+.planet-hud__readouts--right .planet-hud__readout {
+  align-items: flex-start;
+  border-left: 2px solid var(--accent-palette);
+  --hud-shift: -16px;
+}
+
+.planet-hud__readout:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.planet-hud__readout:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.planet-hud__readout::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 1px;
+  background: var(--hud-line);
+}
+
+.planet-hud__readouts--left .planet-hud__readout::after {
+  left: 100%;
+}
+
+.planet-hud__readouts--right .planet-hud__readout::after {
+  right: 100%;
+}
+
+.planet-hud__readout span,
+.planet-hud__stat span {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.planet-hud__readout strong,
+.planet-hud__stat strong {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.planet-hud__readout strong::first-letter,
+.planet-hud__subtitle::first-letter {
+  text-transform: uppercase;
+}
+
+.planet-hud__globe {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.planet-hud__globe::before,
+.planet-hud__globe::after {
+  content: '';
+  position: absolute;
+  background: var(--hud-faint);
+}
+
+.planet-hud__globe::before {
+  inset: 50% -4% auto;
+  height: 1px;
+}
+
+.planet-hud__globe::after {
+  inset: -4% auto auto 50%;
+  width: 1px;
+  height: 108%;
+}
+
+.planet-hud__ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.planet-hud__ring--dashed {
+  inset: 0;
+  border: 1px dashed var(--hud-line);
+  animation: hud-spin 60s linear infinite;
+}
+
+.planet-hud__ring--orbit {
+  inset: 40% -6%;
+  border: 1px solid var(--hud-line);
+  transform: rotate(-14deg);
+  box-shadow: 0 0 18px var(--hud-faint);
+}
+
+.planet-hud__planet {
   position: relative;
   z-index: 1;
-  display: block;
-  width: min(86%, 380px);
+  width: 74%;
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
   box-shadow:
-    inset -30px -36px 60px rgba(0, 0, 0, 0.72),
-    0 0 70px color-mix(in srgb, var(--accent-palette) 22%, transparent),
-    0 30px 58px rgba(0, 0, 0, 0.62);
+    inset -30px -36px 60px rgba(0, 0, 0, 0.7),
+    0 0 60px var(--hud-glow),
+    0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
-.planet-page__atmosphere {
+.planet-hud__scan {
   position: absolute;
   z-index: 2;
-  width: min(92%, 420px);
-  aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 35%, transparent);
+  inset: 13%;
+  overflow: hidden;
   border-radius: 50%;
-  box-shadow:
-    inset 0 0 24px color-mix(in srgb, var(--accent-palette) 16%, transparent),
-    0 0 34px color-mix(in srgb, var(--accent-palette) 28%, transparent);
+  pointer-events: none;
 }
 
-.planet-page__horizon {
+.planet-hud__scan::before {
+  content: '';
   position: absolute;
-  z-index: 3;
-  width: min(116%, 560px);
-  height: 120px;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 22%, transparent);
-  border-radius: 50%;
-  transform: rotate(-14deg);
-  box-shadow: 0 0 30px color-mix(in srgb, var(--accent-palette) 8%, transparent);
+  left: 0;
+  right: 0;
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--accent-palette) 28%, transparent) 85%,
+    var(--accent-palette)
+  );
+  opacity: 0.55;
+  animation: hud-scan 4.5s ease-in-out infinite;
 }
 
-.planet-page__info-card {
-  padding: clamp(28px, 5vw, 48px);
-}
-
-.planet-page__eyebrow {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: var(--accent-palette);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.planet-page__header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-top: 14px;
-}
-
-.planet-page__title {
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(44px, 7vw, 92px);
-  font-weight: 900;
-  line-height: 0.9;
-  text-shadow:
-    0 0 22px color-mix(in srgb, var(--accent-palette) 22%, transparent),
-    0 12px 34px rgba(0, 0, 0, 0.6);
-}
-
-.planet-page__subtitle {
-  margin: 16px 0 0;
-  color: color-mix(in srgb, var(--accent-palette) 90%, transparent);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.planet-page__id {
-  flex: 0 0 auto;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 32%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent-palette) 8%, transparent);
-  padding: 9px 12px;
-  color: rgba(255, 255, 255, 0.76);
-  font-family: monospace;
-  font-size: 12px;
-}
-
-.planet-page__summary {
-  position: relative;
-  z-index: 1;
-  max-width: 720px;
-  margin: 24px 0 0;
-  color: rgba(255, 255, 255, 0.64);
-  font-size: 15px;
-  line-height: 1.75;
-}
-
-.planet-page__highlight-grid {
-  position: relative;
-  z-index: 1;
+.planet-hud__footer {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 34px;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
 }
 
-.planet-page__highlight {
-  min-width: 0;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 18%, transparent);
-  border-radius: 20px;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--accent-palette) 12%, transparent), color-mix(in srgb, var(--accent-palette) 4.5%, transparent)),
-    rgba(255, 255, 255, 0.035);
-  padding: 18px;
-}
-
-.planet-page__highlight--wide {
-  grid-column: span 1;
-}
-
-.planet-page__highlight span,
-.planet-page__metric span {
-  display: block;
-  color: rgba(255, 255, 255, 0.46);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.planet-page__highlight strong {
-  display: block;
-  margin-top: 10px;
-  overflow: hidden;
-  color: #ffffff;
-  font-size: 22px;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  text-transform: capitalize;
-}
-
-.planet-page__metrics {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 28px;
-}
-
-.planet-page__metric {
+.planet-hud__stat {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent-palette) 14%, transparent);
-  padding: 15px 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 22px;
+  border: 1px solid var(--hud-faint);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(8px);
 }
 
-.planet-page__metric strong {
-  overflow: hidden;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 16px;
-  text-align: right;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.planet-hud__stat--wide strong {
+  font-size: 30px;
 }
 
-.planet-page--center {
+.planet-state {
   display: flex;
-  min-height: calc(100vh - 180px);
+  min-height: calc(100vh - 220px);
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.planet-page__state-card,
-.planet-page__loading-card {
-  width: min(100%, 680px);
-  padding: 48px;
+  gap: 16px;
   text-align: center;
 }
 
-.planet-page__state-title {
-  position: relative;
-  z-index: 1;
-  margin: 14px 0 0;
-  color: #ffffff;
+.planet-state__title {
+  margin: 0;
+  color: #fff;
   font-size: clamp(34px, 6vw, 62px);
   line-height: 1;
 }
 
-.planet-page__state-text {
-  position: relative;
-  z-index: 1;
-  margin: 18px auto 0;
+.planet-state__text {
   max-width: 460px;
-  color: rgba(255, 255, 255, 0.62);
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.7;
 }
 
-.planet-page__orbit-loader {
-  position: relative;
-  z-index: 1;
-  width: 92px;
-  height: 92px;
-  margin: 0 auto 24px;
-  border: 1px solid color-mix(in srgb, var(--accent-palette) 28%, transparent);
-  border-radius: 50%;
-  animation: planet-page-spin 1.6s linear infinite;
+@keyframes hud-spin {
+  to { transform: rotate(360deg); }
 }
 
-.planet-page__orbit-loader::before {
-  content: '';
-  position: absolute;
-  inset: 25px;
-  border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      color-mix(in srgb, var(--accent-palette) 70%, white) 0%,
-      var(--accent-palette) 28%,
-      color-mix(in srgb, var(--accent-palette) 12%, black) 78%
-    );
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent-palette) 40%, transparent);
+@keyframes hud-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(460%); }
 }
 
-.planet-page__orbit-loader span {
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--accent-palette);
-  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-palette) 80%, transparent);
+@keyframes hud-readout-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--hud-shift, 16px));
+  }
 }
 
-@keyframes planet-page-spin {
-  to {
-    transform: rotate(360deg);
+@media (hover: hover) and (pointer: fine) {
+  .planet-hud__back:hover {
+    opacity: 0.75;
   }
 }
 
 @media (max-width: 1080px) {
-  .planet-page__hero {
-    grid-template-columns: 1fr;
+  .planet-hud__stage {
+    grid-template-columns: 1fr minmax(220px, 320px) 1fr;
+    gap: 16px;
   }
 
-  .planet-page__image-shell {
-    min-height: 500px;
+  .planet-hud__readout strong {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 720px) {
-  .planet-page__header {
-    flex-direction: column;
+  .planet-hud {
+    gap: 24px;
   }
 
-  .planet-page__highlight-grid,
-  .planet-page__metrics {
-    grid-template-columns: 1fr;
+  .planet-hud__stage {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
-  .planet-page__image-shell {
-    min-height: 420px;
+  .planet-hud__globe {
+    grid-column: 1 / -1;
+    order: -1;
+    width: min(76vw, 300px);
+    justify-self: center;
   }
 
-  .planet-page__state-card,
-  .planet-page__loading-card {
-    padding: 32px 24px;
+  .planet-hud__readouts {
+    gap: 12px;
+  }
+
+  .planet-hud__readouts--left .planet-hud__readout {
+    align-items: flex-start;
+    text-align: left;
+    border-right: 1px solid var(--hud-faint);
+    border-left: 2px solid var(--accent-palette);
+  }
+
+  .planet-hud__readout {
+    padding: 12px 14px;
+  }
+
+  .planet-hud__readout::after {
+    display: none;
+  }
+
+  .planet-hud__readout strong {
+    font-size: 16px;
+  }
+
+  .planet-hud__footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .planet-hud__stat--wide {
+    grid-column: 1 / -1;
+  }
+
+  .planet-hud__stat--wide strong {
+    font-size: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet-hud__ring--dashed,
+  .planet-hud__scan::before,
+  .planet-hud__readout {
+    animation: none;
   }
 }

@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Loader } from '@shared/components/ui';
 import { EpisodeDetailsService } from '../services/episode-details.service';
 
 @Component({
   selector: 'app-episode-page',
-  imports: [RouterLink],
+  imports: [Loader, RouterLink],
   templateUrl: './episode-page.html',
   styleUrl: './episode-page.css',
 })

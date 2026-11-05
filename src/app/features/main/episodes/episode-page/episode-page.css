@@ -57,8 +57,7 @@
 
 .episode-page__poster-card,
 .episode-page__content,
-.episode-page__state-card,
-.episode-page__loading-card {
+.episode-page__state-card {
   position: relative;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--accent-palette) 22%, transparent);
@@ -73,8 +72,7 @@
 
 .episode-page__poster-card::before,
 .episode-page__content::before,
-.episode-page__state-card::before,
-.episode-page__loading-card::before {
+.episode-page__state-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -263,8 +261,7 @@
   justify-content: center;
 }
 
-.episode-page__state-card,
-.episode-page__loading-card {
+.episode-page__state-card {
   width: min(100%, 680px);
   padding: 48px;
   text-align: center;
@@ -286,25 +283,6 @@
   max-width: 460px;
   color: rgba(255, 255, 255, 0.62);
   line-height: 1.7;
-}
-
-.episode-page__loader {
-  position: relative;
-  z-index: 1;
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 24px;
-  border: 2px solid color-mix(in srgb, var(--accent-palette) 18%, transparent);
-  border-top-color: var(--accent-palette);
-  border-radius: 50%;
-  animation: episode-page-spin 1s linear infinite;
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent-palette) 18%, transparent);
-}
-
-@keyframes episode-page-spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @media (max-width: 1080px) {
@@ -333,8 +311,7 @@
     min-height: 420px;
   }
 
-  .episode-page__state-card,
-  .episode-page__loading-card {
+  .episode-page__state-card {
     padding: 32px 24px;
   }
 }

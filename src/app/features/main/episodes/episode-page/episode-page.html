@@ -1,11 +1,5 @@
 @if (episodeDetailsService.isEpisodeLoading()) {
-  <section class="episode-page episode-page--center">
-    <div class="episode-page__loading-card">
-      <div class="episode-page__loader" aria-hidden="true"></div>
-      <p class="episode-page__eyebrow">Opening crawl loading</p>
-      <h1 class="episode-page__state-title">Preparing episode archive...</h1>
-    </div>
-  </section>
+  <app-loader />
 } @else if (episodeDetailsService.error()) {
   <section class="episode-page episode-page--center">
     <div class="episode-page__state-card">
