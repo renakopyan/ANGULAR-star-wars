@@ -1,11 +1,19 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AuthService } from '@shared/services';
 import { ContextMenu, ContextMenuOption } from '@shared/components/ui';
 
+type NavRoute = {
+  path: string;
+  name: string;
+  sections?: string[];
+};
+
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLink, RouterLinkActive, ContextMenu],
+  imports: [RouterLink, ContextMenu],
   templateUrl: './navigation.html',
   styleUrl: './navigation.css',
 })
@@ -13,15 +21,24 @@ export class Navigation {
   private router = inject(Router);
   private authService = inject(AuthService);
   public isContextMenuVisible = signal(false);
-
-  public routes = [
-    { path: '/', name: 'Персонажи' },
+  public routes: NavRoute[] = [
+    { path: '/', name: 'Персонажи', sections: ['characters'] },
     { path: '/episodes', name: 'Фильмы' },
     { path: '/planets', name: 'Планеты' },
     { path: '/species', name: 'Биологический вид' },
     { path: '/starships', name: 'Звездные корабли' },
     { path: '/vehicles', name: 'Транспортные средства' },
   ];
+
+  private currentUrl = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  private section = computed(() => this.currentUrl().split(/[/?#]/)[1] ?? '');
 
   get contextMenuOptions(): ContextMenuOption[] {
     if (!this.authService.isAuthed) {
@@ -38,6 +55,10 @@ export class Navigation {
       { id: 'settings', label: 'Настройки', variant: 'default', icon: '/svg/settings.svg' },
       { id: 'logout', label: 'Выйти', variant: 'danger', icon: '/svg/logout.svg' },
     ];
+  }
+
+  isRouteActive({ path, sections = [] }: NavRoute): boolean {
+    return [path.slice(1), ...sections].includes(this.section());
   }
 
   handleProfileClick() {

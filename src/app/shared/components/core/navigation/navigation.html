@@ -14,8 +14,7 @@
           <a
             [routerLink]="route.path"
             class="navigation__link"
-            routerLinkActive="navigation__link--active"
-            [routerLinkActiveOptions]="{ exact: true }"
+            [class.navigation__link--active]="isRouteActive(route)"
           >
             {{ route.name }}
           </a>
