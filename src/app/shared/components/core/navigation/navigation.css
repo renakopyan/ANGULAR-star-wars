@@ -95,7 +95,6 @@
   white-space: nowrap;
 }
 
-.navigation__link:hover,
 .navigation__link--active {
   color: var(--accent-palette);
   text-shadow:
@@ -103,8 +102,14 @@
     0 0 22px color-mix(in srgb, var(--accent-palette) 34%, transparent);
 }
 
-.navigation__link:hover {
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .navigation__link:hover {
+    color: var(--accent-palette);
+    text-shadow:
+      0 0 8px color-mix(in srgb, var(--accent-palette) 72%, transparent),
+      0 0 22px color-mix(in srgb, var(--accent-palette) 34%, transparent);
+    transform: translateY(-1px);
+  }
 }
 
 .navigation__link--active::after {
