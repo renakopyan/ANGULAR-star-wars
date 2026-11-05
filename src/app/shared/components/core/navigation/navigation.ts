@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { afterRenderEffect, Component, computed, ElementRef, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -39,6 +39,16 @@ export class Navigation {
   );
 
   private section = computed(() => this.currentUrl().split(/[/?#]/)[1] ?? '');
+  private host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  constructor() {
+    afterRenderEffect(() => {
+      this.section();
+      this.host.nativeElement
+        .querySelector('.navigation__link--active')
+        ?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  }
 
   get contextMenuOptions(): ContextMenuOption[] {
     if (!this.authService.isAuthed) {
