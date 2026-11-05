@@ -17,13 +17,14 @@ export class EpisodeDetailsService {
   public cachedEpisodes = signal<EpisodesDict>({});
 
   getEpisodeById(id: string) {
+    this.error.set('');
+
     if(this.cachedEpisodes()[id]) {
       this.selectedEpisode.set(this.cachedEpisodes()[id]);
       return;
     }
 
     this.isEpisodeLoading.set(true);
-    this.error.set('');
 
     this.http.get<EpisodeSingleServerResponse>(`${API_CORE}/films/${id}`)
       .pipe(finalize(() => this.isEpisodeLoading.set(false)))

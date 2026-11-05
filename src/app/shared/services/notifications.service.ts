@@ -6,8 +6,10 @@ import { Injectable, signal } from "@angular/core";
 export class NotificationsService {
   public isVisible = signal(false);
   public message = signal('');
+  private hideTimer?: ReturnType<typeof setTimeout>;
 
   closeNotification() {
+    clearTimeout(this.hideTimer);
     this.isVisible.set(false);
     this.message.set('')
   }
@@ -16,10 +18,7 @@ export class NotificationsService {
     this.message.set(message);
     this.isVisible.set(true);
 
-    setTimeout(() => {
-      if(this.isVisible()) {
-        this.closeNotification();
-      }
-    }, 5000)
+    clearTimeout(this.hideTimer);
+    this.hideTimer = setTimeout(() => this.closeNotification(), 5000);
   }
 }

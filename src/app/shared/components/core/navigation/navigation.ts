@@ -19,7 +19,7 @@ export class Navigation {
     { path: '/episodes', name: 'Фильмы' },
     { path: '/planets', name: 'Планеты' },
     { path: '/species', name: 'Биологический вид' },
-    { path: '/starships', name: 'Зведные корабли' },
+    { path: '/starships', name: 'Звездные корабли' },
     { path: '/vehicles', name: 'Транспортные средства' },
   ];
 

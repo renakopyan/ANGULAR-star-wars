@@ -17,6 +17,8 @@ export class CharacterDetailsService {
   public cachedCharacters = signal<CharacterDict>({});
 
   getCharacterById(id: string): CharacterType | void {
+    this.error.set('');
+
     if(this.cachedCharacters()[id]) {
       this.selectedCharacter.set(this.cachedCharacters()[id]);
       return;

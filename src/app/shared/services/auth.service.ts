@@ -53,14 +53,14 @@ export class AuthService {
     }
 
     const accessToken = crypto.randomUUID(); // Если все ок, генерим рандомный токен для сессии
-    this.cookieService.set(ACCESS_TOKEN, accessToken);
+    this.cookieService.set(ACCESS_TOKEN, accessToken, { path: '/' });
     localStorage.setItem(CURRENT_AUTHED_USER, JSON.stringify(currentUser));
     this.router.navigate(['/']);
   }
 
   logout() {
     localStorage.removeItem(CURRENT_AUTHED_USER);
-    this.cookieService.delete(ACCESS_TOKEN);
+    this.cookieService.delete(ACCESS_TOKEN, { path: '/' });
     return this.router.navigate(['/']);
   }
 

@@ -17,6 +17,8 @@ export class PlanetDetailsService {
   public cachedPlanets = signal<PlanetsDict>({});
 
   getPlanetById(id: string) {
+    this.error.set('');
+
     if (this.cachedPlanets()[id]) {
       this.selectedPlanet.set(this.cachedPlanets()[id]);
       return;
@@ -24,7 +26,7 @@ export class PlanetDetailsService {
 
     this.isPlanetLoading.set(true);
     this.http
-      .get<PlanetSingleServerResponse>(`${API_CORE}/people/${id}`)
+      .get<PlanetSingleServerResponse>(`${API_CORE}/planets/${id}`)
       .pipe(finalize(() => this.isPlanetLoading.set(false)))
       .subscribe({
         next: (response) => {
@@ -36,7 +38,7 @@ export class PlanetDetailsService {
           }));
         },
         error: () => {
-          this.error.set(`Ошибка при загрузке данных о герое #${id}`);
+          this.error.set(`Ошибка при загрузке данных о планете #${id}`);
         },
       });
   }
