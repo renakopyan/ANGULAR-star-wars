@@ -50,6 +50,6 @@ export class PlanetsService {
   }
 
   planetsList = computed(() => {
-    return Object.values(this.planets());
+    return Object.values(this.planets()).filter((planet) => Boolean(planet.img));
   })
 }

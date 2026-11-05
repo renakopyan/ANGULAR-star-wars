@@ -38,6 +38,7 @@ body {
   width: min(100% - 32px, 1280px);
   margin: 0 auto;
   padding-top: 50px;
+  padding-bottom: 80px;
 }
 
 body::before {

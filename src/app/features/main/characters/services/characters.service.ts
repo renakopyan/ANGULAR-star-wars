@@ -50,6 +50,6 @@ export class CharactersService {
   }
 
   charactersList = computed(() => {
-    return Object.values(this.characters());
+    return Object.values(this.characters()).filter((character) => Boolean(character.img));
   })
 }
