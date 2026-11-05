@@ -19,6 +19,14 @@ body {
   min-height: 100vh;
   isolation: isolate;
   background:
+    radial-gradient(0.8px 0.8px at 148px 146px, rgba(147, 197, 253, 0.35), transparent) 0 0 / 180px 180px,
+    radial-gradient(0.8px 0.8px at 24px 140px, rgba(255, 255, 255, 0.45), transparent) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 158px 52px, rgba(147, 197, 253, 0.35), transparent) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 80px 119px, rgba(147, 197, 253, 0.35), transparent) 0 0 / 180px 180px,
+    radial-gradient(0.8px 0.8px at 76px 63px, rgba(255, 255, 255, 0.45), transparent) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 20px 147px, rgba(147, 197, 253, 0.35), transparent) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 87px 114px, rgba(255, 255, 255, 0.45), transparent) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 30px 131px, rgba(255, 255, 255, 0.45), transparent) 0 0 / 180px 180px,
     radial-gradient(
       circle at 85% 20%,
       color-mix(in srgb, var(--accent-palette) 12%, transparent),
@@ -41,29 +49,31 @@ body {
   padding-bottom: 80px;
 }
 
+/* Ближние звёзды. Двигаем через transform, а не background-position:
+   это делает видеокарта, без перерисовки страницы — плавно и не греет телефон.
+   Слой больше экрана на 240px (размер плитки) и сдвигается ровно на 240px — цикл без скачка */
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -240px 0 0 -240px;
   z-index: -1;
   pointer-events: none;
   background-image:
-    radial-gradient(rgba(255, 255, 255, 0.95) 1px, transparent 1.5px),
-    radial-gradient(
-      color-mix(in srgb, var(--accent-palette) 85%, transparent) 1px,
-      transparent 1.5px
-    ),
-    radial-gradient(rgba(147, 197, 253, 0.75) 1px, transparent 1.5px);
-  background-size:
-    70px 70px,
-    120px 120px,
-    180px 180px;
-  background-position:
-    0 0,
-    40px 60px,
-    90px 20px;
-  opacity: 0.32;
-  animation: stars-move 40s linear infinite;
+    radial-gradient(2px 2px at 82px 38px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 18px 210px, rgba(147, 197, 253, 0.8), transparent),
+    radial-gradient(1px 1px at 149px 14px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 22px 111px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 61px 23px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 211px 144px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 161px 160px, color-mix(in srgb, var(--accent-palette) 80%, transparent), transparent),
+    radial-gradient(1px 1px at 12px 56px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 74px 107px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 146px 78px, rgba(255, 255, 255, 0.9), transparent);
+  background-size: 240px 240px;
+  background-position: 0 0;
+  opacity: 0.6;
+  animation: stars-move 18s linear infinite;
+  will-change: transform;
 }
 
 body::after {
@@ -83,19 +93,39 @@ body::after {
   -webkit-mask: url('/icons/lord-vader.svg') center / contain no-repeat;
   opacity: 0.5;
   pointer-events: none;
+  animation: vader-float 14s ease-in-out infinite;
 }
 
 @keyframes stars-move {
-  from {
-    background-position:
-      0 0,
-      40px 60px,
-      90px 20px;
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(240px, 240px, 0); }
+}
+
+/* Вейдер медленно «дышит» */
+@keyframes vader-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -14px, 0); }
+}
+
+@media (max-width: 768px) {
+  body::before {
+    opacity: 0.5;
+    animation-duration: 26s;
   }
-  to {
-    background-position:
-      300px 600px,
-      340px 660px,
-      390px 620px;
+
+  /* На телефоне Вейдер крупнее и виден целиком, но бледнее — чтобы не мешать тексту */
+  body::after {
+    width: 82vw;
+    height: 82vw;
+    right: -16vw;
+    bottom: -4vw;
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
   }
 }
