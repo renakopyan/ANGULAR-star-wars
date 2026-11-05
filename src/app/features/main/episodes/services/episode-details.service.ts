@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
-import { EpisodeSingleServerResponse } from './episodes-server-types';
-import { episodeSingleResponseMapping } from './episodes-api-mapping';
+import { EpisodesServerResponse } from './episodes-server-types';
+import { episodesResponseMapping } from './episodes-api-mapping';
 import { EpisodesDict, EpisodeType } from '@shared/domain';
 import { API_CORE } from '@shared/consts';
 
@@ -26,16 +26,13 @@ export class EpisodeDetailsService {
 
     this.isEpisodeLoading.set(true);
 
-    this.http.get<EpisodeSingleServerResponse>(`${API_CORE}/films/${id}`)
+    this.http.get<EpisodesServerResponse>(`${API_CORE}/films`, { params: { expanded: true } })
       .pipe(finalize(() => this.isEpisodeLoading.set(false)))
       .subscribe({
         next: (response) => {
-          const mappedResponse = episodeSingleResponseMapping(response);
-          this.selectedEpisode.set(mappedResponse);
-          this.cachedEpisodes.update((dict) => ({
-            ...dict,
-            [mappedResponse.episodeId]: mappedResponse,
-          }))
+          const mappedResponse = episodesResponseMapping(response);
+          this.cachedEpisodes.set(mappedResponse);
+          this.selectedEpisode.set(mappedResponse[id]);
         },
         error: () => {
           this.error.set(`Ошибка при загрузке эпизода ${id}`)

@@ -10,11 +10,11 @@ export const EPISODES_FULL_DATA_DICT: Record<string, EpisodesExtraData> = {
     color: '',
   },
   '2': {
-    img: '/assets/films/episode-2.jpg',
+    img: '/assets/films/episode-2.webp',
     color: '',
   },
   '3': {
-    img: '/assets/films/episode-3.jpg',
+    img: '/assets/films/episode-3.webp',
     color: '',
   },
   '4': {
@@ -22,7 +22,7 @@ export const EPISODES_FULL_DATA_DICT: Record<string, EpisodesExtraData> = {
     color: '',
   },
   '5': {
-    img: '/assets/films/episode-5.jpg',
+    img: '/assets/films/episode-5.webp',
     color: '',
   },
   '6': {

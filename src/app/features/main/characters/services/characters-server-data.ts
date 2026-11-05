@@ -8,7 +8,7 @@ export type CharactersExtraData = {
 // Словарь вручную собранных данных, которых не хватает в АПИ для полноценной работы
 export const CHARACTERS_FULL_DATA_DICT: Record<string, CharactersExtraData> = {
   '1': {
-    img: '/assets/characters/luke.jpg',
+    img: '/assets/characters/luke.webp',
     designation: 'Jedi Knight',
     color: 'green',
   },
@@ -17,7 +17,7 @@ export const CHARACTERS_FULL_DATA_DICT: Record<string, CharactersExtraData> = {
     designation: 'Protocol Droid',
   },
   '3': {
-    img: '/assets/characters/r2-d2.png',
+    img: '/assets/characters/r2-d2.webp',
     designation: 'Astromech Droid',
   },
   '4': {
@@ -31,33 +31,33 @@ export const CHARACTERS_FULL_DATA_DICT: Record<string, CharactersExtraData> = {
     designation: 'Rebel Leader',
   },
   '6': {
-    img: '/assets/characters/owen.jpeg',
+    img: '/assets/characters/owen.webp',
     designation: 'Moisture Farmer',
   },
   '7': {
-    img: '/assets/characters/beru.jpg',
+    img: '/assets/characters/beru.webp',
     designation: 'Moisture Farmer',
   },
   '8': {
-    img: '/assets/characters/r5-d4.jpeg',
+    img: '/assets/characters/r5-d4.webp',
     designation: 'Astromech Droid',
   },
   '9': {
-    img: '/assets/characters/biggs.jpeg',
+    img: '/assets/characters/biggs.webp',
     designation: 'Rebel Pilot',
   },
   '10': {
-    img: '/assets/characters/obi-wan.jpg',
+    img: '/assets/characters/obi-wan.webp',
     designation: 'Jedi Master',
     color: 'blue',
   },
   '11': {
-    img: '/assets/characters/anakin.jpeg',
+    img: '/assets/characters/anakin.webp',
     designation: 'Jedi Knight',
     color: 'blue',
   },
   '12': {
-    img: '/assets/characters/tarkin.png',
+    img: '/assets/characters/tarkin.webp',
     designation: 'Imperial Governor',
   },
   '13': {
@@ -65,7 +65,7 @@ export const CHARACTERS_FULL_DATA_DICT: Record<string, CharactersExtraData> = {
     designation: 'Wookiee Warrior',
   },
   '14': {
-    img: '/assets/characters/han-solo.jpeg',
+    img: '/assets/characters/han-solo.webp',
     designation: 'Smuggler',
   },
   '15': {
@@ -83,15 +83,15 @@ export const CHARACTERS_FULL_DATA_DICT: Record<string, CharactersExtraData> = {
     designation: 'Rebel Pilot',
   },
   '20': {
-    img: '/assets/characters/yoda.jpeg',
+    img: '/assets/characters/yoda.webp',
     designation: 'Jedi Grand Master',
   },
   '21': {
-    img: '/assets/characters/palpatine.png',
+    img: '/assets/characters/palpatine.webp',
     designation: 'Sith Lord',
   },
   '22': {
-    img: '/assets/characters/boba-fet.jpeg',
+    img: '/assets/characters/boba-fet.webp',
     designation: 'Sith Lord',
   },
 }
