@@ -22,12 +22,12 @@ export class Navigation {
   private authService = inject(AuthService);
   public isContextMenuVisible = signal(false);
   public routes: NavRoute[] = [
-    { path: '/', name: 'Персонажи', sections: ['characters'] },
+    { path: '/characters', name: 'Персонажи' },
     { path: '/episodes', name: 'Фильмы' },
     { path: '/planets', name: 'Планеты' },
     { path: '/species', name: 'Биологический вид' },
     { path: '/starships', name: 'Звездные корабли' },
-    { path: '/vehicles', name: 'Транспортные средства' },
+    // { path: '/vehicles', name: 'Транспортные средства' },
   ];
 
   private currentUrl = toSignal(
@@ -39,6 +39,7 @@ export class Navigation {
   );
 
   private section = computed(() => this.currentUrl().split(/[/?#]/)[1] ?? '');
+  public isHomeActive = computed(() => this.section() === '');
   private host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   constructor() {

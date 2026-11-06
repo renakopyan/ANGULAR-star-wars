@@ -62,6 +62,50 @@
   opacity: 0.78;
   filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-palette) 35%, transparent));
   cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+
+.navigation__home {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  padding-right: 22px;
+  border-right: 1px solid color-mix(in srgb, var(--accent-palette) 25%, transparent);
+  text-decoration: none;
+}
+
+.navigation__brand {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.navigation__vader {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.74);
+  -webkit-mask: url('/icons/lord-vader.svg') center / contain no-repeat;
+  mask: url('/icons/lord-vader.svg') center / contain no-repeat;
+  transition: background-color 0.25s ease;
+}
+
+.navigation__home--active .navigation__vader {
+  background-color: var(--accent-palette);
+}
+
+.navigation__home--active .navigation__brand {
+  color: var(--accent-palette);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--accent-palette) 72%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent-palette) 34%, transparent);
 }
 
 .navigation__list {
@@ -103,6 +147,17 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .navigation__home:hover .navigation__vader {
+    background-color: var(--accent-palette);
+  }
+
+  .navigation__home:hover .navigation__brand {
+    color: var(--accent-palette);
+    text-shadow:
+      0 0 8px color-mix(in srgb, var(--accent-palette) 72%, transparent),
+      0 0 22px color-mix(in srgb, var(--accent-palette) 34%, transparent);
+  }
+
   .navigation__link:hover {
     color: var(--accent-palette);
     text-shadow:

@@ -2,7 +2,7 @@
   <app-loader></app-loader>
 } @else if (characterDetailsService.selectedCharacter(); as character) {
   <article class="character-page">
-    <a class="character-page__back-link" routerLink="/">
+    <a class="character-page__back-link" routerLink="/characters">
       Обратно к персонажам
     </a>
 
@@ -103,7 +103,7 @@
       <p class="character-page__summary">
         Запрошенная запись отсутствует в галактическом архиве.
       </p>
-      <a class="character-page__back-link character-page__back-link--inline" routerLink="/">
+      <a class="character-page__back-link character-page__back-link--inline" routerLink="/characters">
         Обратно к персонажам
       </a>
     </div>

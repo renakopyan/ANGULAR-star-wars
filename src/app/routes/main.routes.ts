@@ -9,6 +9,11 @@ export const MAIN_ROUTES: Routes = [
       {
         path: '',
         loadComponent: () =>
+          import('@features/main/home/home-page').then((m) => m.HomePage),
+      },
+      {
+        path: 'characters',
+        loadComponent: () =>
           import('@features/main/characters/characters-page').then((m) => m.CharactersPage),
       },
       {
