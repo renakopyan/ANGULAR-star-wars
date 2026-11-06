@@ -1,111 +1,110 @@
 @if (characterDetailsService.isCharacterLoading()) {
-  <app-loader></app-loader>
+  <app-loader />
+} @else if (characterDetailsService.error()) {
+  <section class="character-state">
+    <p class="character-state__eyebrow">Сигнал потерян</p>
+    <h1 class="character-state__title">Персонаж недоступен</h1>
+    <p class="character-state__text">{{ characterDetailsService.error() }}</p>
+    <a class="character-poster__back" routerLink="/characters">Обратно к персонажам</a>
+  </section>
 } @else if (characterDetailsService.selectedCharacter(); as character) {
-  <article class="character-page">
-    <a class="character-page__back-link" routerLink="/characters">
-      Обратно к персонажам
-    </a>
+  <article class="character-poster">
+    <a class="character-poster__back" routerLink="/characters">Обратно к персонажам</a>
 
-    <section class="character-page__hero">
-      <div class="character-page__media">
-        <div class="character-page__image-frame">
-          @if(character.video) {
-            <video autoplay loop controls [src]="character.video"></video>
-          } @else {
-            <img
-              class="character-page__image"
-              [src]="character.img || '/assets/characters/placeholder.webp'"
-              [alt]="character.name"
-            />
-            <div class="character-page__image-overlay"></div>
-          }
-        </div>
+    <section class="character-poster__hero">
+      <img
+        class="character-poster__backdrop"
+        [src]="character.img || '/assets/characters/placeholder.webp'"
+        alt=""
+        aria-hidden="true"
+      />
 
-        <div class="character-page__signal" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
+      @if (character.video) {
+        <video
+          class="character-poster__media"
+          [src]="character.video"
+          autoplay
+          loop
+          muted
+          playsinline
+        ></video>
+      } @else {
+        <img
+          class="character-poster__media"
+          [src]="character.img || '/assets/characters/placeholder.webp'"
+          [alt]="character.name"
+        />
+      }
 
-      <div class="character-page__info">
-        <p class="character-page__eyebrow">Запись имперского архива</p>
-
-        <div class="character-page__header">
-          <div>
-            <h1 class="character-page__title">{{ character.name }}</h1>
-            <p class="character-page__designation">
-              {{ character.designation || 'Житель галактики' }}
-            </p>
-          </div>
-
-          <span class="character-page__id">ID {{ character.id }}</span>
-        </div>
-
-        <p class="character-page__summary">
-          Данные профиля собраны из галактического архива. Биологические признаки,
-          связи и записи перемещений указаны ниже.
-        </p>
-
-        <div class="character-page__stats">
-          <div class="character-page__stat">
-            <span class="character-page__stat-label">Рост</span>
-            <strong class="character-page__stat-value">{{ character.height }}</strong>
-          </div>
-          <div class="character-page__stat">
-            <span class="character-page__stat-label">Масса</span>
-            <strong class="character-page__stat-value">{{ character.mass }}</strong>
-          </div>
-          <div class="character-page__stat">
-            <span class="character-page__stat-label">Год рождения</span>
-            <strong class="character-page__stat-value">{{ character.birthYear }}</strong>
-          </div>
-          <div class="character-page__stat">
-            <span class="character-page__stat-label">Пол</span>
-            <strong class="character-page__stat-value">{{ character.gender }}</strong>
-          </div>
-        </div>
-
-        <div class="character-page__details">
-          <div class="character-page__detail">
-            <span>Цвет волос</span>
-            <strong>{{ character.hairColor }}</strong>
-          </div>
-          <div class="character-page__detail">
-            <span>Цвет кожи</span>
-            <strong>{{ character.skinColor }}</strong>
-          </div>
-          <div class="character-page__detail">
-            <span>Цвет глаз</span>
-            <strong>{{ character.eyeColor }}</strong>
-          </div>
-          <div class="character-page__detail">
-            <span>Фильмы</span>
-            <strong>{{ character.films.length }}</strong>
-          </div>
-          <div class="character-page__detail">
-            <span>Корабли</span>
-            <strong>{{ character.starships.length }}</strong>
-          </div>
-          <div class="character-page__detail">
-            <span>Транспорт</span>
-            <strong>{{ character.vehicles.length }}</strong>
-          </div>
-        </div>
+      <div class="character-poster__content">
+        <span class="character-poster__id">#{{ character.id }}</span>
+        <p class="character-poster__designation">{{ character.designation || 'Житель галактики' }}</p>
+        <h1 class="character-poster__name">{{ character.name }}</h1>
       </div>
     </section>
+
+    <section class="character-poster__stats">
+      <div class="character-poster__stat">
+        <span>Рост</span>
+        <strong>{{ formatValue(character.height, 'см') }}</strong>
+      </div>
+      <div class="character-poster__stat">
+        <span>Масса</span>
+        <strong>{{ formatValue(character.mass, 'кг') }}</strong>
+      </div>
+      <div class="character-poster__stat">
+        <span>Год рождения</span>
+        <strong>{{ formatValue(character.birthYear) }}</strong>
+      </div>
+      <div class="character-poster__stat">
+        <span>Пол</span>
+        <strong>{{ genderLabel(character.gender) }}</strong>
+      </div>
+    </section>
+
+    <div class="character-poster__columns">
+      <section class="character-poster__block">
+        <h2 class="character-poster__block-title">Внешность</h2>
+        <dl class="character-poster__traits">
+          <div>
+            <dt>Волосы</dt>
+            <dd>{{ formatValue(character.hairColor) }}</dd>
+          </div>
+          <div>
+            <dt>Кожа</dt>
+            <dd>{{ formatValue(character.skinColor) }}</dd>
+          </div>
+          <div>
+            <dt>Глаза</dt>
+            <dd>{{ formatValue(character.eyeColor) }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="character-poster__block">
+        <h2 class="character-poster__block-title">Появления</h2>
+        <div class="character-poster__counters">
+          <div>
+            <strong>{{ character.films.length }}</strong>
+            <span>Фильмы</span>
+          </div>
+          <div>
+            <strong>{{ character.starships.length }}</strong>
+            <span>Корабли</span>
+          </div>
+          <div>
+            <strong>{{ character.vehicles.length }}</strong>
+            <span>Транспорт</span>
+          </div>
+        </div>
+      </section>
+    </div>
   </article>
 } @else {
-  <section class="character-page character-page--empty">
-    <div class="character-page__empty-card">
-      <p class="character-page__eyebrow">Архив недоступен</p>
-      <h1 class="character-page__title">Персонаж не найден</h1>
-      <p class="character-page__summary">
-        Запрошенная запись отсутствует в галактическом архиве.
-      </p>
-      <a class="character-page__back-link character-page__back-link--inline" routerLink="/characters">
-        Обратно к персонажам
-      </a>
-    </div>
+  <section class="character-state">
+    <p class="character-state__eyebrow">Архив пуст</p>
+    <h1 class="character-state__title">Персонаж не найден</h1>
+    <p class="character-state__text">Запись об этом персонаже отсутствует в галактическом архиве.</p>
+    <a class="character-poster__back" routerLink="/characters">Обратно к персонажам</a>
   </section>
 }
