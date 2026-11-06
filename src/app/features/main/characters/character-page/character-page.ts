@@ -19,4 +19,27 @@ export class CharacterPage {
       this.characterDetailsService.getCharacterById(characterId);
     });
   }
+
+  formatValue(value: string, unit = ''): string {
+    if (!value || ['unknown', 'n/a', 'none'].includes(value.toLowerCase())) {
+      return 'Нет данных';
+    }
+
+    const number = Number(value.replace(',', ''));
+
+    if (Number.isNaN(number)) {
+      return value;
+    }
+
+    return `${number.toLocaleString('ru-RU')}${unit ? ` ${unit}` : ''}`;
+  }
+
+  genderLabel(gender: string): string {
+    const labels: Record<string, string> = {
+      male: 'Мужской',
+      female: 'Женский',
+    };
+
+    return labels[gender] ?? 'Нет данных';
+  }
 }

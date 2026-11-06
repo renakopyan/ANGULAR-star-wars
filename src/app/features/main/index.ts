@@ -1,3 +1,4 @@
+export { HomePage } from './home/home-page';
 export { CharactersPage } from './characters/characters-page';
 export { CharacterPage } from './characters/character-page/character-page';
 export { EpisodesPage } from './episodes/episodes-page';

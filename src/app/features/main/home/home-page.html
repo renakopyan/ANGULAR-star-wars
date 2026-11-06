@@ -1,0 +1,72 @@
+<section class="home-intro">
+  <p class="home-intro__prelude">Давным-давно в далёкой-далёкой галактике…</p>
+  <h1 class="home-intro__title">Архив галактики</h1>
+  <p class="home-intro__subtitle">Персонажи, фильмы и планеты саги в одном месте</p>
+</section>
+
+<section class="home-sections">
+  @for (section of sections(); track section.path) {
+    <a class="home-section" [routerLink]="section.path">
+      <img class="home-section__image" [src]="section.image" [alt]="section.title" />
+      <div class="home-section__content">
+        <span class="home-section__count">{{ section.count ?? '—' }}</span>
+        <h2 class="home-section__title">{{ section.title }}</h2>
+        <p class="home-section__caption">{{ section.caption }}</p>
+      </div>
+    </a>
+  }
+</section>
+
+@if (characterOfDay(); as character) {
+  <section class="home-block">
+    <div class="home-block__header">
+      <h2 class="home-block__title">Персонаж дня</h2>
+      <button class="home-block__action" type="button" (click)="showNextCharacter()">Другой персонаж</button>
+    </div>
+
+    <a class="home-hero" [routerLink]="'/characters/' + character.id">
+      <img class="home-hero__image" [src]="character.img" [alt]="character.name" />
+      <div class="home-hero__content">
+        <p class="home-hero__designation">{{ character.designation || 'Житель галактики' }}</p>
+        <h3 class="home-hero__name">{{ character.name }}</h3>
+        <dl class="home-hero__stats">
+          <div>
+            <dt>Рост</dt>
+            <dd>{{ character.height }}</dd>
+          </div>
+          <div>
+            <dt>Масса</dt>
+            <dd>{{ character.mass }}</dd>
+          </div>
+          <div>
+            <dt>Год рождения</dt>
+            <dd>{{ character.birthYear }}</dd>
+          </div>
+        </dl>
+        <span class="home-hero__more">Открыть досье</span>
+      </div>
+    </a>
+  </section>
+}
+
+@if (timeline().length) {
+  <section class="home-block">
+    <div class="home-block__header">
+      <h2 class="home-block__title">Хронология саги</h2>
+    </div>
+
+    <ol class="home-timeline">
+      @for (episode of timeline(); track episode.episodeId) {
+        <li class="home-timeline__item">
+          <a class="home-timeline__link" [routerLink]="'/episodes/' + episode.episodeId">
+            <span class="home-timeline__episode">Эпизод {{ toRoman(episode.episodeId) }}</span>
+            <span class="home-timeline__dot"></span>
+            <img class="home-timeline__poster" [src]="episode.img" [alt]="episode.title" loading="lazy" />
+            <span class="home-timeline__name">{{ episode.title }}</span>
+            <span class="home-timeline__year">{{ episode.releaseDate.slice(0, 4) }}</span>
+          </a>
+        </li>
+      }
+    </ol>
+  </section>
+}

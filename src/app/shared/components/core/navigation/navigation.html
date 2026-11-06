@@ -1,11 +1,12 @@
 <div class="navigation">
   <nav class="navigation__panel">
-    <a routerLink="/">
-      <img
-        src="/icons/lord-vader.svg"
-        class="navigation__icon"
-        alt="Дарт Вейдер"
-      />
+    <a
+      routerLink="/"
+      class="navigation__home"
+      [class.navigation__home--active]="isHomeActive()"
+    >
+      <span class="navigation__vader" aria-hidden="true"></span>
+      <span class="navigation__brand">Главная</span>
     </a>
 
     <ul class="navigation__list">
